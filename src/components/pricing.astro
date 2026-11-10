@@ -3,43 +3,142 @@ import { Tick } from "@/components/ui/icons";
 import Link from "@/components/ui/link.astro";
 
 const { plan } = Astro.props;
+
+// Data structure for the specialized section sitting right under the main tier card
+const individualOptions = [
+  {
+    name: "Standard Unblock",
+    price: "$3",
+    description: "One-time unblock link setup.",
+    warning: "Note: You do not get a replacement link if this is blocked by your school network.",
+    features: [
+      "Instant access link generated",
+      "Standard proxy connection",
+      "Single device support"
+    ],
+    buttonText: "Purchase Link",
+    recommended: false
+  },
+  {
+    name: "Unlimited Unblock",
+    price: "$5",
+    description: "Worry-free unrestricted bypass framework.",
+    warning: "Bonus: You get free brand-new alternative links automatically if your school blocks it.",
+    features: [
+      "Anti-block domain rotation",
+      "Faster global network speeds",
+      "Free persistent replacements"
+    ],
+    buttonText: "Go Unlimited",
+    recommended: true
+  },
+  {
+    name: "Enterprise Unblock",
+    price: "$8",
+    description: "Fully bespoke proxy custom engineering.",
+    warning: "Tailored completely for your choice of platforms.",
+    features: [
+      "Custom login configurations",
+      "Account & admin dashboard tools",
+      "Dedicated stealth infrastructure"
+    ],
+    buttonText: "Build Custom Tier",
+    recommended: false
+  }
+];
 ---
 
-<div>
-  <div
-    class="flex flex-col w-full order-first lg:order-none border-2 border-[#D8DEE9] border-opacity-50 py-5 px-6 rounded-md">
-    <div class="text-center">
-      <h4 class="text-lg font-medium text-gray-400">{plan.name}</h4><p
-        class="mt-3 text-4xl font-bold text-black md:text-4xl">
+<!-- Complete Wrapper Container -->
+<div class="w-full flex flex-col gap-y-16">
+
+  <!-- ORIGINAL CARD SECTION -->
+  <div>
+    <div
+      class="flex flex-col w-full order-first lg:order-none border-2 border-[#D8DEE9] border-opacity-50 py-5 px-6 rounded-md bg-white">
+      <div class="text-center">
+        <h4 class="text-lg font-medium text-gray-400">{plan.name}</h4><p
+          class="mt-3 text-4xl font-bold text-black md:text-4xl">
+          {
+            plan.price && typeof plan.price === "object"
+              ? plan.price.monthly
+              : plan.price
+          }
+        </p>
+        <!-- {
+          plan.price.original && (
+            <p class="mt-1 text-xl font-medium text-gray-400 line-through md:text-2xl">
+              {plan.price.original}
+            </p>
+          )
+        } -->
+      </div><ul class="grid mt-8 text-left gap-y-4">
         {
-          plan.price && typeof plan.price === "object"
-            ? plan.price.monthly
-            : plan.price
+          plan.features.map((item) => (
+            <li class="flex items-start gap-3 text-gray-800">
+              <Tick class="w-6 h-6" />
+              <span>{item}</span>
+            </li>
+          ))
         }
-      </p>
-      <!-- {
-        plan.price.original && (
-          <p class="mt-1 text-xl font-medium text-gray-400 line-through md:text-2xl">
-            {plan.price.original}
-          </p>
-        )
-      } -->
-    </div><ul class="grid mt-8 text-left gap-y-4">
-      {
-        plan.features.map((item) => (
-          <li class="flex items-start gap-3 text-gray-800">
-            <Tick class="w-6 h-6" />
-            <span>{item}</span>
-          </li>
-        ))
-      }
-    </ul><div class="flex mt-8">
-      <Link
-        href={plan.button.link || "#"}
-        block
-        style={plan.popular ? "primary" : "outline"}>
-        {plan.button.text || "Get Started"}
-      </Link>
+      </ul><div class="flex mt-8">
+        <Link
+          href={plan.button.link || "#"}
+          block
+          style={plan.popular ? "primary" : "outline"}>
+          {plan.button.text || "Get Started"}
+        </Link>
+      </div>
     </div>
   </div>
+
+  <!-- NEW UNBLOCK SECTION: Renders right below the main element -->
+  <div class="border-t border-[#D8DEE9] border-opacity-40 pt-12 w-full">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h3 class="text-2xl font-bold text-black md:text-3xl">Individual Website Unblock Tiers</h3>
+      <p class="mt-2 text-sm text-gray-500">Need specific web targets bypassed? Select a specialized on-demand link solution below.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
+      {
+        individualOptions.map((opt) => (
+          <div class={`flex flex-col justify-between border-2 p-6 rounded-md relative transition-all duration-200 ${opt.recommended ? 'border-indigo-600 shadow-md ring-2 ring-indigo-600 ring-opacity-20 bg-white' : 'border-[#D8DEE9] border-opacity-60 bg-white hover:border-gray-400'}`}>
+            
+            {opt.recommended && (
+              <span class="absolute top-0 right-6 transform -translate-y-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                Recommended
+              </span>
+            )}
+
+            <div>
+              <div class="text-center border-b border-gray-100 pb-4">
+                <h4 class="text-lg font-bold text-gray-800">{opt.name}</h4>
+                <p class="mt-2 text-3xl font-extrabold text-black">{opt.price}</p>
+                <p class="text-xs text-gray-500 mt-1">{opt.description}</p>
+              </div>
+              
+              <p class={`text-xs font-semibold rounded p-2.5 my-4 border ${opt.recommended ? 'text-indigo-700 bg-indigo-50 border-indigo-200' : 'text-amber-600 bg-amber-50 border-amber-200 border-opacity-60'}`}>
+                {opt.warning}
+              </p>
+
+              <ul class="grid gap-y-3 text-left mt-2">
+                {opt.features.map((feat) => (
+                  <li class="flex items-start gap-3 text-sm text-gray-700">
+                    <Tick class="w-5 h-5 text-indigo-600 flex-shrink-0" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="flex mt-6">
+              <Link href="#" block style={opt.recommended ? "primary" : "outline"}>
+                {opt.buttonText}
+              </Link>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
 </div>
