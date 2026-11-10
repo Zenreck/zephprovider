@@ -1,10 +1,52 @@
 ---
-import { Tick } from "@/components/ui/icons";
-import Link from "@/components/ui/link.astro";
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/container.astro";
+import Sectionhead from "../components/sectionhead.astro";
+import { Tick } from "../components/ui/icons";
+import Link from "../components/ui/link.astro";
 
-const { plan } = Astro.props;
+// 1. DATA FOR YOUR MAIN SUBSCRIPTION PLANS
+const mainPlans = [
+  {
+    name: "Starter",
+    price: "$9",
+    popular: false,
+    features: [
+      "Access to standard servers",
+      "Secure data encryption",
+      "Standard browsing speeds",
+      "Email support"
+    ],
+    button: { text: "Get Started", link: "#" }
+  },
+  {
+    name: "Professional",
+    price: "$19",
+    popular: false,
+    features: [
+      "High-speed servers",
+      "Advanced bypass features",
+      "Simultaneous connection on 5 devices",
+      "Priority web support"
+    ],
+    button: { text: "Choose Pro", link: "#" }
+  },
+  {
+    name: "Unlimited Tier",
+    price: "$39",
+    popular: true,
+    features: [
+      "Unlimited unblock websites",
+      "Ultra high-speed global backbones",
+      "Unlimited total bandwidth transfer",
+      "24/7 Priority support hotline",
+      "Connect up to 10 devices at once"
+    ],
+    button: { text: "Go Unlimited", link: "#" }
+  }
+];
 
-// Data structure for the specialized section sitting right under the main tier card
+// 2. DATA FOR YOUR INDIVIDUAL SCROLL-DOWN TIERS
 const individualOptions = [
   {
     name: "Standard Unblock",
@@ -48,97 +90,101 @@ const individualOptions = [
 ];
 ---
 
-<!-- Complete Wrapper Container -->
-<div class="w-full flex flex-col gap-y-16">
+<Layout title="Pricing">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">Simple, Transparent Pricing</Fragment>
+      <Fragment slot="desc">Choose the perfect tier to unblock restrictions and access the open web securely.</Fragment>
+    </Sectionhead>
 
-  <!-- ORIGINAL CARD SECTION -->
-  <div>
-    <div
-      class="flex flex-col w-full order-first lg:order-none border-2 border-[#D8DEE9] border-opacity-50 py-5 px-6 rounded-md bg-white">
-      <div class="text-center">
-        <h4 class="text-lg font-medium text-gray-400">{plan.name}</h4><p
-          class="mt-3 text-4xl font-bold text-black md:text-4xl">
-          {
-            plan.price && typeof plan.price === "object"
-              ? plan.price.monthly
-              : plan.price
-          }
-        </p>
-        <!-- {
-          plan.price.original && (
-            <p class="mt-1 text-xl font-medium text-gray-400 line-through md:text-2xl">
-              {plan.price.original}
-            </p>
-          )
-        } -->
-      </div><ul class="grid mt-8 text-left gap-y-4">
-        {
-          plan.features.map((item) => (
-            <li class="flex items-start gap-3 text-gray-800">
-              <Tick class="w-6 h-6" />
-              <span>{item}</span>
-            </li>
-          ))
-        }
-      </ul><div class="flex mt-8">
-        <Link
-          href={plan.button.link || "#"}
-          block
-          style={plan.popular ? "primary" : "outline"}>
-          {plan.button.text || "Get Started"}
-        </Link>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEW UNBLOCK SECTION: Renders right below the main element -->
-  <div class="border-t border-[#D8DEE9] border-opacity-40 pt-12 w-full">
-    <div class="text-center max-w-2xl mx-auto mb-10">
-      <h3 class="text-2xl font-bold text-black md:text-3xl">Individual Website Unblock Tiers</h3>
-      <p class="mt-2 text-sm text-gray-500">Need specific web targets bypassed? Select a specialized on-demand link solution below.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
+    <!-- SECTION 1: MAIN SUBSCRIPTION GRID -->
+    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-screen-lg mt-12 items-stretch">
       {
-        individualOptions.map((opt) => (
-          <div class={`flex flex-col justify-between border-2 p-6 rounded-md relative transition-all duration-200 ${opt.recommended ? 'border-indigo-600 shadow-md ring-2 ring-indigo-600 ring-opacity-20 bg-white' : 'border-[#D8DEE9] border-opacity-60 bg-white hover:border-gray-400'}`}>
-            
-            {opt.recommended && (
+        mainPlans.map((plan) => (
+          <div class="flex flex-col w-full border-2 border-[#D8DEE9] border-opacity-50 py-5 px-6 rounded-md bg-white justify-between relative shadow-sm">
+            {plan.popular && (
               <span class="absolute top-0 right-6 transform -translate-y-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
-                Recommended
+                Popular
               </span>
             )}
-
             <div>
-              <div class="text-center border-b border-gray-100 pb-4">
-                <h4 class="text-lg font-bold text-gray-800">{opt.name}</h4>
-                <p class="mt-2 text-3xl font-extrabold text-black">{opt.price}</p>
-                <p class="text-xs text-gray-500 mt-1">{opt.description}</p>
+              <div class="text-center">
+                <h4 class="text-lg font-medium text-gray-400">{plan.name}</h4>
+                <p class="mt-3 text-4xl font-bold text-black md:text-4xl">
+                  {plan.price}
+                </p>
               </div>
-              
-              <p class={`text-xs font-semibold rounded p-2.5 my-4 border ${opt.recommended ? 'text-indigo-700 bg-indigo-50 border-indigo-200' : 'text-amber-600 bg-amber-50 border-amber-200 border-opacity-60'}`}>
-                {opt.warning}
-              </p>
-
-              <ul class="grid gap-y-3 text-left mt-2">
-                {opt.features.map((feat) => (
-                  <li class="flex items-start gap-3 text-sm text-gray-700">
-                    <Tick class="w-5 h-5 text-indigo-600 flex-shrink-0" />
-                    <span>{feat}</span>
+              <ul class="grid mt-8 text-left gap-y-4">
+                {plan.features.map((item) => (
+                  <li class="flex items-start gap-3 text-gray-800">
+                    <Tick class="w-6 h-6 flex-shrink-0 text-indigo-600" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-
-            <div class="flex mt-6">
-              <Link href="#" block style={opt.recommended ? "primary" : "outline"}>
-                {opt.buttonText}
+            <div class="flex mt-8">
+              <Link
+                href={plan.button.link || "#"}
+                block
+                style={plan.popular ? "primary" : "outline"}>
+                {plan.button.text || "Get Started"}
               </Link>
             </div>
           </div>
         ))
       }
     </div>
-  </div>
 
-</div>
+    <!-- SECTION 2: INDIVIDUAL WEBSITE UNBLOCK TIERS (RENDERS BELOW MAIN OPTIONS) -->
+    <div class="border-t border-[#D8DEE9] border-opacity-40 pt-12 mt-20 w-full max-w-screen-lg mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h3 class="text-2xl font-bold text-black md:text-3xl">Individual Website Unblock Tiers</h3>
+        <p class="mt-2 text-sm text-gray-500">Need specific web targets bypassed? Select a specialized on-demand link solution below.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        {
+          individualOptions.map((opt) => (
+            <div class={`flex flex-col justify-between border-2 p-6 rounded-md relative transition-all duration-200 ${opt.recommended ? 'border-indigo-600 shadow-md ring-2 ring-indigo-600 ring-opacity-20 bg-white' : 'border-[#D8DEE9] border-opacity-60 bg-white hover:border-gray-400'}`}>
+              
+              {opt.recommended && (
+                <span class="absolute top-0 right-6 transform -translate-y-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                  Recommended
+                </span>
+              )}
+
+              <div>
+                <div class="text-center border-b border-gray-100 pb-4">
+                  <h4 class="text-lg font-bold text-gray-800">{opt.name}</h4>
+                  <p class="mt-2 text-3xl font-extrabold text-black">{opt.price}</p>
+                  <p class="text-xs text-gray-500 mt-1">{opt.description}</p>
+                </div>
+                
+                <p class={`text-xs font-semibold rounded p-2.5 my-4 border ${opt.recommended ? 'text-indigo-700 bg-indigo-50 border-indigo-200' : 'text-amber-600 bg-amber-50 border-amber-200 border-opacity-60'}`}>
+                  {opt.warning}
+                </p>
+
+                <ul class="grid gap-y-3 text-left mt-2">
+                  {opt.features.map((feat) => (
+                    <li class="flex items-start gap-3 text-sm text-gray-700">
+                      <Tick class="w-5 h-5 text-indigo-600 flex-shrink-0" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="flex mt-6">
+                <Link href="#" block style={opt.recommended ? "primary" : "outline"}>
+                  {opt.buttonText}
+                </Link>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+  </Container>
+</Layout>
