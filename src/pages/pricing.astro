@@ -1,64 +1,56 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Container from "@/components/container.astro";
-import Sectionhead from "@/components/sectionhead.astro";
-import PricingCard from "@/components/pricing.astro";
+import Layout from '@layouts/Layout.astro';
+import Container from '@components/container.astro';
+import Sectionhead from '@components/sectionhead.astro';
+import Button from '@components/ui/Button.astro';
 
 const pricing = [
   {
-    name: "Personal",
-    price: "Free",
-    popular: false,
-    features: [
-      "Lifetime free",
-      "Up to 3 users",
-      "Unlimited Pages",
-      "Astro Sub domain",
-      "Basic Integrations",
-      "Community Support",
-    ],
-    button: {
-      text: "Get Started",
-      link: "/",
-    },
-  },
-  {
-    name: "Startup",
-    price: {
-      monthly: "$19",
-      annual: "$16",
-      discount: "10%",
-      original: "$24",
-    },
+    name: "Custom AI Option",
+    price: "$3",
     popular: true,
+    description: "Affordable and fast turnaround powered by our custom AI running on local RTX 5070 hardware, matched to your personal vocabulary.",
     features: [
-      "All Free Features",
-      "Up to 20 users",
-      "20 Custom domains",
-      "Unlimited Collaborators",
-      "Advanced Integrations",
-      "Priority Support",
+      "Powered by custom local AI",
+      "Matches your personal writing style",
+      "Undetectable & natural phrasing",
+      "Fast delivery turnaround"
     ],
     button: {
       text: "Get Started",
-      link: "#",
+      href: "/contact",
     },
   },
   {
-    name: "Enterprise",
-    price: "Custom",
+    name: "No-AI Option",
+    price: "$5",
     popular: false,
+    description: "100% human-researched and written entirely by hand without the use of any AI tools, reflecting dedicated time and effort.",
     features: [
-      "All Pro Features",
-      "Unlimited Custom domains",
-      "99.99% Uptime SLA",
-      "SAML & SSO Integration",
-      "Dedicated Account Manager",
-      "24/7 Phone Support",
+      "Hand-researched from scratch",
+      "Zero AI tools used",
+      "Authentic human writing",
+      "Thorough attention to detail"
     ],
     button: {
-      text: "Contact us",
-      link: "/contact",
+      text: "Get Started",
+      href: "/contact",
+    },
+  },
+  {
+    name: "Flexible Delivery",
+    price: "$3 - $5",
+    popular: false,
+    description: "Choose your preferred workflow—either have us complete the work directly or receive tailored notes to write out in your own handwriting.",
+    features: [
+      "Choose AI ($3) or No-AI ($5) backing",
+      "In-person local meetup options",
+      "Paper or digital material exchange",
+      "Flexible completion timeline"
+    ],
+    button: {
+      text: "Contact Us",
+      href: "/contact",
     },
   },
 ];
@@ -67,15 +59,52 @@ const pricing = [
 <Layout title="Pricing">
   <Container>
     <Sectionhead>
-      <Fragment slot="title">Pricing</Fragment>
+      <Fragment slot="title">Pricing Plans</Fragment>
       <Fragment slot="desc">
-        Simple & Predictable pricing. No Surprises.
+        Simple, transparent rates for high-quality, discreet assignment support.
       </Fragment>
     </Sectionhead>
 
-    <div
-      class="grid md:grid-cols-3 gap-10 mx-auto max-w-(--breakpoint-lg) mt-12">
-      {pricing.map((item) => <PricingCard plan={item} />)}
+    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-screen-lg mt-12">
+      {
+        pricing.map((item) => (
+          <div class={`flex flex-col justify-between rounded-3xl p-6 lg:p-8 bg-white border ${item.popular ? 'border-indigo-500 shadow-lg ring-1 ring-indigo-500' : 'border-slate-200 shadow-sm'} relative`}>
+            {item.popular && (
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+                Most Popular
+              </span>
+            )}
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">{item.name}</h3>
+              <p class="text-slate-500 mt-2 text-sm leading-relaxed">{item.description}</p>
+              
+              <div class="mt-6 flex items-baseline">
+                <span class="text-4xl font-extrabold tracking-tight text-slate-900">{item.price}</span>
+              </div>
+
+              <ul class="mt-6 space-y-3 text-sm text-slate-600">
+                {item.features.map((feature) => (
+                  <li class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="mt-8">
+              <a
+                href={item.button.href}
+                class={`w-full block text-center py-3 px-4 rounded-xl font-medium text-sm transition-colors ${item.popular ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-slate-900 text-white hover:bg-slate-800'}`}
+              >
+                {item.button.text}
+              </a>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </Container>
 </Layout>
