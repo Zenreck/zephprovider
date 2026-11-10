@@ -1,20 +1,37 @@
 ---
-import HeaderLinks from './HeaderLinks.astro';
 ---
 
-<header class="flex flex-col lg:flex-row justify-between items-center my-5">
-  <div class="flex w-full lg:w-auto items-center justify-between">
-    <a href="/" class="text-lg font-bold">
-      <span class="text-slate-900">Zeph</span><span class="text-slate-500">Hosting</span>
-    </a>
-    <!-- Mobile Menu Button can stay here -->
+<header class="w-full py-4 px-4 sm:px-8 bg-white border-b border-slate-100">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+    
+    <!-- Top Left Corner: Home Button / Brand -->
+    <div class="w-full sm:w-auto flex justify-center sm:justify-start">
+      <a 
+        href="/" 
+        class="text-lg font-bold text-slate-900 hover:text-indigo-600 transition-colors flex items-center gap-2"
+      >
+        <span class="bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm font-semibold">Home</span>
+      </a>
+    </div>
+
+    <!-- Top Middle Centered: Navigation Buttons -->
+    <nav class="w-full sm:w-auto flex justify-center items-center gap-3 sm:gap-6">
+      <a 
+        href="/pricing" 
+        class="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 rounded-md transition-colors text-center"
+      >
+        Pricing
+      </a>
+      <a 
+        href="/contact" 
+        class="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 rounded-md transition-colors text-center"
+      >
+        Contact
+      </a>
+    </nav>
+
+    <!-- Empty Spacer (Desktop only to maintain perfect centered alignment for middle buttons) -->
+    <div class="hidden sm:block w-[72px]" aria-hidden="true"></div>
+
   </div>
-
-  <nav class="hidden lg:flex items-center gap-4">
-    <!-- Cleaned up navigation items (Removed Blog, About, etc.) -->
-    <a href="/pricing" class="text-slate-600 hover:text-slate-900">Pricing</a>
-    <a href="/contact" class="text-slate-600 hover:text-slate-900">Contact</a>
-  </nav>
-
-  <!-- Removed Sign in & Sign up buttons entirely -->
 </header>
