@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Container from '../components/container.astro';
 import Sectionhead from '../components/sectionhead.astro';
 
+// YOUR ORIGINAL ASSIGNMENT PLANS DATA
 const pricing = [
   {
     name: "Custom AI Option",
@@ -53,6 +54,49 @@ const pricing = [
     },
   },
 ];
+
+// NEW INDIVIDUAL WEBSITE UNBLOCK TIERS DATA
+const individualOptions = [
+  {
+    name: "Standard Unblock",
+    price: "$3",
+    description: "One-time unblock link setup.",
+    warning: "Note: You do not get a replacement link if this is blocked by your school network.",
+    features: [
+      "Instant access link generated",
+      "Standard proxy connection",
+      "Single device support"
+    ],
+    buttonText: "Purchase Link",
+    recommended: false
+  },
+  {
+    name: "Unlimited Unblock",
+    price: "$5",
+    description: "Worry-free unrestricted bypass framework.",
+    warning: "Bonus: You get free brand-new alternative links automatically if your school blocks it.",
+    features: [
+      "Anti-block domain rotation",
+      "Faster global network speeds",
+      "Free persistent replacements"
+    ],
+    buttonText: "Go Unlimited",
+    recommended: true
+  },
+  {
+    name: "Enterprise Unblock",
+    price: "$8",
+    description: "Fully bespoke proxy custom engineering.",
+    warning: "Tailored completely for your choice of platforms.",
+    features: [
+      "Custom login configurations",
+      "Account & admin dashboard tools",
+      "Dedicated stealth infrastructure"
+    ],
+    buttonText: "Build Custom Tier",
+    recommended: false
+  }
+];
 ---
 
 <Layout title="Pricing">
@@ -64,6 +108,7 @@ const pricing = [
       </Fragment>
     </Sectionhead>
 
+    <!-- SECTION 1: YOUR ORIGINAL MAIN PRICING TIERS -->
     <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-screen-lg mt-12 mb-20">
       {
         pricing.map((item) => (
@@ -105,5 +150,63 @@ const pricing = [
         ))
       }
     </div>
+
+    <!-- SECTION 2: NEW INDIVIDUAL WEBSITE UNBLOCK TIERS -->
+    <div class="border-t border-slate-200 pt-12 mt-20 w-full max-w-screen-lg mx-auto mb-20">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h3 class="text-2xl font-bold text-slate-900 md:text-3xl">Individual Website Unblock Tiers</h3>
+        <p class="mt-2 text-sm text-slate-500">Need specific web targets bypassed? Select a specialized on-demand link solution below.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        {
+          individualOptions.map((opt) => (
+            <div class={`flex flex-col justify-between border rounded-3xl p-6 lg:p-8 relative transition-all duration-200 ${opt.recommended ? 'border-indigo-500 shadow-lg ring-1 ring-indigo-500 bg-white' : 'border-slate-200 shadow-sm bg-white hover:border-slate-400'}`}>
+              
+              {opt.recommended && (
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+                  Recommended
+                </span>
+              )}
+
+              <div>
+                <div class="border-b border-slate-100 pb-4">
+                  <h3 class="text-xl font-bold text-slate-900">{opt.name}</h3>
+                  <p class="text-xs text-slate-500 mt-1">{opt.description}</p>
+                  <div class="mt-4 flex items-baseline">
+                    <span class="text-4xl font-extrabold tracking-tight text-slate-900">{opt.price}</span>
+                  </div>
+                </div>
+                
+                <p class={`text-xs font-semibold rounded-xl p-3 my-4 border leading-relaxed ${opt.recommended ? 'text-indigo-700 bg-indigo-50 border-indigo-200' : 'text-amber-700 bg-amber-50 border-amber-200'}`}>
+                  {opt.warning}
+                </p>
+
+                <ul class="mt-4 space-y-3 text-sm text-slate-600">
+                  {opt.features.map((feat) => (
+                    <li class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="mt-8">
+                <a 
+                  href="/contact" 
+                  class={`w-full block text-center py-3 px-4 rounded-xl font-medium text-sm transition-colors ${opt.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-slate-900 text-white hover:bg-slate-800'}`}
+                >
+                  {opt.buttonText}
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
   </Container>
 </Layout>
