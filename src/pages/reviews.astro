@@ -3,26 +3,23 @@ import Layout from "../layouts/Layout.astro";
 import Container from "../components/container.astro";
 import Sectionhead from "../components/sectionhead.astro";
 
-// This array makes it easy to add or edit reviews in one place
+// Updated array with example names, empty reviews, and removed roles
 const reviews = [
   {
-    name: "Sarah Jenkins",
-    role: "Home Renovation Client",
-    review: "Absolutely thrilled with the transformation! The team was professional, clean, and delivered exactly what they promised ahead of schedule.",
-    beforeImg: "/assets/before1.jpg", // Place your images in your 'public/assets/' folder
+    name: "Example 1",
+    review: "",
+    beforeImg: "/assets/before1.jpg", 
     afterImg: "/assets/after1.jpg",
   },
   {
-    name: "David Chen",
-    role: "Dental Smile Makeover",
-    review: "The results speak for themselves. The before and after photos are amazing, but living with it is even better. Highly recommend their services!",
+    name: "Example 2",
+    review: "",
     beforeImg: "/assets/before2.jpg",
     afterImg: "/assets/after2.jpg",
   },
   {
-    name: "Elena Rostova",
-    role: "Landscape Design",
-    review: "My backyard went from a muddy patch of grass to an absolute paradise. The design process was smooth and the execution was flawless.",
+    name: "Example 3",
+    review: "",
     beforeImg: "/assets/before3.jpg",
     afterImg: "/assets/after3.jpg",
   }
@@ -81,13 +78,14 @@ const reviews = [
               ))}
             </div>
             
-            <blockquote class="text-slate-700 italic text-lg leading-relaxed mb-4">
-              "{item.review}"
-            </blockquote>
+            {item.review && (
+              <blockquote class="text-slate-700 italic text-lg leading-relaxed mb-4">
+                "{item.review}"
+              </blockquote>
+            )}
             
             <div>
               <h3 class="font-bold text-slate-900 text-lg">{item.name}</h3>
-              <p class="text-slate-500 text-sm">{item.role}</p>
             </div>
           </div>
 
